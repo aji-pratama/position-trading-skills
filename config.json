@@ -1,0 +1,86 @@
+{
+  "_note": "All thresholds are starting examples. Adjust to your own view; calibrate through the review skill.",
+
+  "regime": {
+    "weights": {"liquidity": 0.30, "usd_yield": 0.20, "growth_inflation": 0.15, "risk": 0.35},
+    "zones": {"risk_on": 0.40, "neutral": -0.20, "defensive": -0.50},
+    "min_coverage": 0.6,
+    "emergency": {"vix": 35, "hy_spread": 7.0},
+    "units": {"WALCL": 1000000, "WTREGEN": 1000000, "RRPONTSYD": 1000000000},
+    "net_liquidity_sane_range": [1.0e12, 2.0e13],
+    "thresholds": {
+      "netliq_roc13": 0.01,
+      "m2_roc3": 0.003,
+      "dollar_roc13": 0.01,
+      "real_yield_chg13": 0.25,
+      "claims_ratio": 0.03,
+      "unrate_chg3": 0.1,
+      "payroll_3m_avg_k": 50,
+      "core_cpi_3m_ann_high": 0.03,
+      "vix_low": 20, "vix_high": 30,
+      "hy_low": 3.5, "hy_high": 5.5,
+      "curve_pos": 0.25, "curve_neg": -0.5,
+      "xly_xlp_roc13": 0.01
+    },
+    "posture": {
+      "Risk-on": "Aggressive: the environment supports risk assets.",
+      "Neutral": "Normal: be selective, wait for confirmation.",
+      "Defensive": "Defensive: reduce risk assets, favor cash, gold, USD.",
+      "Risk-off": "Very defensive: mostly cash; only gold and USD make sense."
+    },
+    "tilt": {
+      "Risk-on": {"crypto": "overweight", "equities": "overweight", "gold": "neutral", "usd_cash": "underweight"},
+      "Neutral": {"crypto": "neutral", "equities": "neutral", "gold": "neutral", "usd_cash": "neutral"},
+      "Defensive": {"crypto": "underweight", "equities": "underweight", "gold": "overweight", "usd_cash": "overweight"},
+      "Risk-off": {"crypto": "minimal", "equities": "minimal", "gold": "overweight", "usd_cash": "overweight"}
+    }
+  },
+
+  "btc": {
+    "symbol": "BTCUSDT",
+    "euphoria_dist40": 0.60,
+    "euphoria_mvrv_pct": 0.85,
+    "accum_band": 0.10,
+    "accum_mvrv_pct": 0.40,
+    "evidence_mvrv_pct_max": 0.70,
+    "funding_crowded_pct": 0.85,
+    "halvings": ["2012-11-28", "2016-07-09", "2020-05-11", "2024-04-20"]
+  },
+
+  "alts": {
+    "min_quote_volume_usd": 20000000,
+    "universe_size": 40,
+    "min_age_weeks": 26,
+    "late_ret4": 0.80,
+    "late_dist10": 0.40,
+    "mid_rs12": 0.10,
+    "top_n": 10,
+    "exclude_bases": ["USDT","USDC","FDUSD","TUSD","BUSD","DAI","USDP","USDE","EUR","TRY","BRL","WBTC","WBETH","BTC"]
+  },
+
+  "stocks": {
+    "benchmark": "spy.us",
+    "sectors": {"XLK":"Technology","XLF":"Financials","XLE":"Energy","XLV":"Health Care","XLY":"Consumer Discretionary","XLP":"Consumer Staples","XLI":"Industrials","XLU":"Utilities","XLB":"Materials","XLRE":"Real Estate","XLC":"Communication"},
+    "quadrant_favored": {
+      "growth_up_inflation_down": ["XLK","XLY","XLC","XLI"],
+      "growth_up_inflation_up": ["XLE","XLB","XLF","XLI"],
+      "growth_down_inflation_up": ["XLE","XLP","XLV","XLU"],
+      "growth_down_inflation_down": ["XLU","XLP","XLV","XLRE"]
+    }
+  },
+
+  "portfolio": {
+    "near_invalidation_pct": 0.05,
+    "posture_risk_share_guidance": {"Risk-on": null, "Neutral": null, "Defensive": 0.50, "Risk-off": 0.20},
+    "limits": {"max_single_asset_pct": null, "max_crypto_pct": null, "max_alt_pct": null, "min_cash_pct": null},
+    "circuit_breaker": {"caution_dd": 0.15, "defensive_dd": 0.25}
+  },
+
+  "sheet": {
+    "tabs": {
+      "Positions": ["asset","class","qty","entry","date","invalidation","thesis","horizon","setup"],
+      "Journal": ["date","asset","action","price","regime","btc_phase","gate_open","followed_rules","note"],
+      "Snapshots": ["date","regime","composite","btc_phase","btc_evidence","equity_usd"]
+    }
+  }
+}

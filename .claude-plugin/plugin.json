@@ -1,0 +1,6 @@
+{
+  "name": "position-trader",
+  "version": "0.1.0",
+  "description": "Position-trading analysis assistant (weekly-monthly, cyclical, spot only): macro regime, BTC cycle, alt rotation, US sector rotation, portfolio checks via Google Sheets, and review. Analysis only: no position sizing and no order execution.",
+  "keywords": ["trading", "macro", "crypto", "portfolio", "google-sheets"]
+}
