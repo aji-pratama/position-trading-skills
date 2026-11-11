@@ -1,0 +1,15 @@
+{
+  "name": "position-trader-marketplace",
+  "description": "Marketplace catalog for position-trader plugin",
+  "owner": {
+    "name": "Aji Pratama"
+  },
+  "plugins": [
+    {
+      "name": "position-trader",
+      "description": "Position-trading analysis assistant (weekly-monthly, cyclical, spot only): macro regime, BTC cycle, alt rotation, US sector rotation, portfolio checks via Google Sheets, and review.",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}
