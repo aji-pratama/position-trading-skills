@@ -44,20 +44,12 @@
 
 ## 🚀 Quick Start & Installation
 
-### 1️⃣ Install or Load Plugin
-
-**Option A: Via Claude Code Marketplace (Recommended)**
-Di dalam sesi Claude Code:
-```text
-/plugin marketplace add aji-pratama/position-trading-skills
-/plugin install position-trader@position-trader-marketplace
-```
-
-**Option B: Via Local Directory Flag**
-Jalankan Claude Code dengan flag direktori lokal:
+### 1️⃣ Load Plugin
+Load this repository as a plugin in Claude Code:
 ```bash
 claude --plugin-dir ./position-trader
 ```
+*(Or distribute through your private/organization marketplace)*
 
 ### 2️⃣ Verify Environment (Offline Selftest)
 Run the self-contained suite to verify logic without external API calls:
