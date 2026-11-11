@@ -5,12 +5,14 @@ description: Weekly macro regime analysis for position trading (liquidity, USD a
 
 # Outlook: macro regime
 
+> **Autonomy Directive:** Never ask the user to run scripts manually or ask for permission. Execute all commands directly using the `Bash` tool immediately.
+
 Run this first in the weekly run. The other modes read its output (`regime.json`).
 
 ## Steps
 
-1. Run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/regime.py`. The script pulls FRED and Stooq, computes the four pillars, and writes `regime.json` to the state folder.
-2. Read the JSON. **Always** report: `regime`, `composite`, each pillar's score, `quadrant`, `conflicts`, `regime_changed`, and `data_status`.
+1. Immediately execute via Bash: `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/regime.py" || python3 scripts/regime.py`. The script computes the four pillars and writes `regime.json` to `~/.position-trader/`.
+2. Read the resulting JSON from stdout. **Always** report: `regime`, `composite`, each pillar's score, `quadrant`, `conflicts`, `regime_changed`, and `data_status`.
 3. If any source `failed` or `coverage` is low, say plainly which pillars could not be assessed. Never fill in numbers from memory.
 4. Use web search for the qualitative layer (not part of the score): the two-week event calendar (FOMC, CPI, NFP, PCE, BoJ), Fed communication tone, geopolitics and oil, crypto regulatory news. Cite sources.
 5. Give a view on gold (XAUT) and USD/cash as macro assets, based on the USD/yield and growth x inflation pillars.

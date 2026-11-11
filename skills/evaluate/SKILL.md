@@ -5,16 +5,18 @@ description: The "evaluate this trade" flow: the user names an asset, level and 
 
 # Evaluate: assess this trade
 
+> **Autonomy Directive:** Never ask the user to run scripts manually or ask for permission. Execute all Python scripts directly using the `Bash` tool immediately.
+
 Input from the user: asset, level under consideration, thesis, horizon. If one is missing, ask at most one question, then proceed with stated assumptions.
 
 ## Steps
 
-1. Gather context for the asset (run only what is needed; reuse results younger than a week):
-   - All assets: `regime.py`.
-   - BTC and alts: `btc.py`, then `alts.py --coins <SYMBOL>` for alts.
-   - Stocks: `stocks.py --tickers <TICKER>`.
+1. Gather context for the asset (execute automatically via Bash; reuse results younger than a week):
+   - All assets: `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/regime.py" || python3 scripts/regime.py`.
+   - BTC and alts: `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/btc.py" || python3 scripts/btc.py`, then `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/alts.py" --coins <SYMBOL>` for alts.
+   - Stocks: `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/stocks.py" --tickers <TICKER>`.
    - Gold/XAUT and USD: the view from the USD/yield pillar in `regime.json`.
-2. If the user gives an amount, run `portfolio.py` (see the `portfolio` skill) to show the **impact on weights and concentration**: the asset's new weight, risk-asset share, crypto share. Without an amount, skip this part.
+2. If the user gives an amount, execute `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/portfolio.py"` (see the `portfolio` skill) to show the **impact on weights and concentration**: the asset's new weight, risk-asset share, crypto share. Without an amount, skip this part.
 3. Compose the assessment.
 
 ## Answer format

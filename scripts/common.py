@@ -8,7 +8,9 @@ import os
 import sys
 import urllib.request
 
-UA = {"User-Agent": "position-trader/0.1 (analysis only)"}
+UA = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+}
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -28,13 +30,13 @@ def now_iso():
     return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def http_get(url, timeout=25):
+def http_get(url, timeout=5):
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8", "replace")
 
 
-def http_json(url, timeout=25):
+def http_json(url, timeout=5):
     return json.loads(http_get(url, timeout))
 
 

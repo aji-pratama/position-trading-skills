@@ -5,6 +5,7 @@ Usage:  python3 regime.py [--fixture f.json] [--out result.json] [--no-save]
 Sources: FRED (public CSV, no API key) and Stooq. Source failures are reported in data_status.
 """
 import argparse
+import concurrent.futures
 import json
 import os
 import sys
@@ -22,17 +23,28 @@ FRED_SERIES = {
 BACK13W = {"W": 13, "D": 65, "M": 3}
 
 
+def _fetch_fred_item(name, freq):
+    try:
+        rows = parse_fred(http_get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={name}", timeout=4))
+        if not rows:
+            return name, None, "empty data"
+        return name, {"values": [v for _, v in rows], "freq": freq, "last": rows[-1][0]}, f"last {rows[-1][0]}"
+    except Exception as e:
+        return name, None, str(e)[:200]
+
+
 def fetch_all(status):
     data = {}
-    for name, freq in FRED_SERIES.items():
-        try:
-            rows = parse_fred(http_get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={name}"))
-            if not rows:
-                raise ValueError("empty data")
-            data[name] = {"values": [v for _, v in rows], "freq": freq, "last": rows[-1][0]}
-            status.ok(name, f"last {rows[-1][0]}")
-        except Exception as e:  # noqa: BLE001
-            status.failed(name, e)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+        futures = {ex.submit(_fetch_fred_item, name, freq): name for name, freq in FRED_SERIES.items()}
+        for fut in concurrent.futures.as_completed(futures):
+            name, val, msg = fut.result()
+            if val:
+                data[name] = val
+                status.ok(name, msg)
+            else:
+                status.failed(name, msg)
+
     for key, sym in {"SPX": "^spx", "XLY": "xly.us", "XLP": "xlp.us"}.items():
         c = stooq_closes(sym, "w", status, key)
         if c:

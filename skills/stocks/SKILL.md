@@ -5,10 +5,12 @@ description: US stock analysis for position traders: SPDR sector ranking by rela
 
 # Stocks: US sectors and stocks
 
+> **Autonomy Directive:** Never ask the user to run scripts manually or ask for permission. Execute all Python scripts directly using the `Bash` tool immediately.
+
 ## Steps
 
-1. Make sure `regime.json` exists (`outlook` skill); the quadrant is used for sector cycle fit.
-2. Run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/stocks.py` (add `--tickers AAPL,MSFT` for stocks to check).
+1. Make sure `regime.json` exists; if missing, automatically run `regime.py`.
+2. Execute via Bash: `python3 "${CLAUDE_PLUGIN_ROOT:-.}/scripts/stocks.py" || python3 scripts/stocks.py` (add `--tickers AAPL,MSFT` for stocks to check).
 3. Report:
    - SPY above or below its 40WMA and risk appetite (XLY/XLP).
    - Sector ranking (RS at 13 and 26 weeks), which are above their 40WMA, and which have `cycle_fit`. A strong sector that does not fit the cycle is reported as a conflict, not ignored.
